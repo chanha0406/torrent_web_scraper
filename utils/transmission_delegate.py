@@ -68,8 +68,6 @@ class TransmissionDelegate:
 
             dir_name = dir_name[:-1]
 
-            print("DEBUG: " + dir_name)
-
             payload['arguments']['download-dir'] = down_dir + "/" + dir_name
 
         print("DEBUG : download_dir = " + payload['arguments']['download-dir'])
