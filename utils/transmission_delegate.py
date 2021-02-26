@@ -49,9 +49,20 @@ class TransmissionDelegate:
             if self.__history_delegate.check_magnet_history(magnet_info.magnet):
                 return False
 
+        dir_name = ""
+
+        for t in magnet_info.matched_name.title:
+            dir_name += t
+            dir_name += " "
+
+        dir_name = dir_name[:-1]
+
+        print("DEBUG: " + dir_name)
+
         payload = {
                 "arguments":{
-                    "filename": magnet_info.magnet
+                    "filename": magnet_info.magnet,
+                    "download-dir" : "/토렌트/series/" + dir_name,
                     },
                 "method": "torrent-add"
                 }
