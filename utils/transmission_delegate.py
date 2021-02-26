@@ -44,17 +44,33 @@ class TransmissionDelegate:
         assert response["result"] == "success"
         return response
 
-    def add_magnet_transmission_remote(self, magnet_info):
+    def add_magnet_transmission_remote(self, magnet_info, down_dir):
         if self.__history_delegate is not None:
             if self.__history_delegate.check_magnet_history(magnet_info.magnet):
                 return False
 
+        down_dir.replace(" ", "")
+
         payload = {
                 "arguments":{
-                    "filename": magnet_info.magnet
+                    "filename": magnet_info.magnet,
                     },
                 "method": "torrent-add"
                 }
+
+        if down_dir != "":
+
+            dir_name = ""
+
+            for t in magnet_info.matched_name.title:
+                dir_name += t
+                dir_name += " "
+
+            dir_name = dir_name[:-1]
+
+            payload['arguments']['download-dir'] = down_dir + "/" + dir_name
+
+        print("DEBUG : download_dir = " + payload['arguments']['download-dir'])
 
         res = self.__rpc_post(payload)
         if res['result'] == 'success':

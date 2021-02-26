@@ -35,6 +35,7 @@ class ScraperTemplate(metaclass=ABCMeta):
         trans_host = self.__system_config.get_config_local("trans-host")
         trans_port = self.__system_config.get_config_local("trans-port")
 
+        self.__down_dir = self.__system_config.get_config_local("down-dir")
         self.__transmission_delegate = TransmissionDelegate(trans_id, trans_pw,
                 trans_host, trans_port, self.history_delegate)
 
@@ -77,7 +78,7 @@ class ScraperTemplate(metaclass=ABCMeta):
         categories = [x.strip() for x in
                 self.__scraper_config.get_config_scraper('categories').split(',')]
 
-        if len(categories) == 1 and categories[0] is "":
+        if len(categories) == 1 and categories[0] == "":
             print("Scrapping for this site is disabled.")
             categories = []
 
@@ -159,7 +160,7 @@ class ScraperTemplate(metaclass=ABCMeta):
                     continue
 
                 magnet_info = MagnetInfo(title, magnet, matched_name, self.name)
-                ret = self.__transmission_delegate.add_magnet_transmission_remote(magnet_info)
+                ret = self.__transmission_delegate.add_magnet_transmission_remote(magnet_info, self.__down_dir)
                 if not ret:
                     continue
 
