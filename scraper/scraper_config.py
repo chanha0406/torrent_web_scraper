@@ -1,6 +1,7 @@
 from utils.config_manager import ConfigManager
 
-class ScraperConfig():
+
+class ScraperConfig:
     def __init__(self, site, scraper_configuration, local_machine):
         "scraper_configuration은 static, local_machine은 dynamic 성격을 가짐."
         self.__site = site
@@ -13,16 +14,16 @@ class ScraperConfig():
 
     def get_base_url(self):
         if self.__url_updated is None:
-            ret = self.get_config_scraper('url')
+            ret = self.get_config_scraper("url")
         else:
             ret = self.__url_updated
 
         return ret
 
     def set_base_url(self, base_url):
-        ''' 이것은 임시 설정임. persistent data가 아님
-        url 숫자 올라갔을때, 임시로 변경하기 위한 설정. '''
+        attr = "%s-url" % (self.__site)
         self.__url_updated = base_url
+        self.__manager_scraper_configuration.set_attr_config(attr, base_url)
         self.__url = self.get_base_url()
 
     def get_url(self):

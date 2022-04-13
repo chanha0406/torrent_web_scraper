@@ -1,5 +1,6 @@
 import sys
 from utils.json_parser import JsonParser
+import json
 
 class ConfigManager():
     def __init__(self, setfileName):
@@ -21,4 +22,5 @@ class ConfigManager():
         return self.__delegate.get_key_value(key)
 
     def set_attr_config(self, key, value):
-        return self.__delegate.set_key_value(key, value)
+        return self.__delegate.set_key_value(key, value)            
+        
