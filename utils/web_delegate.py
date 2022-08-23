@@ -12,8 +12,10 @@ class WebDelegate:
     @retry(stop=stop_after_attempt(10))
     def get_web_data(self, addr):
         print(f"get web data {addr}")
-        req = Request(addr, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'})
-        html = urlopen(req, timeout = 1, context=ssl.SSLContext()).read().decode('utf-8','replace')
+        req = Request(addr, headers={'User-Agent': 'Mozilla/5.0'})
+        html = urlopen(req).read().decode('utf-8','replace')
+        #req = Request(addr, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'})
+        #html = urlopen(req, timeout = 3, context=ssl.SSLContext()).read().decode('utf-8','replace')
         data = self.__parser_engine(html, "html.parser")
         return data
 
@@ -21,8 +23,10 @@ class WebDelegate:
     def check_url_alive(self, addr):
         try:
             print(f"check {addr}")
-            req = Request(addr, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'})
-            html = urlopen(req, timeout = 1, context=ssl.SSLContext())
+            req = Request(addr, headers={'User-Agent': 'Mozilla/5.0'})
+            html = urlopen(req).read().decode('utf-8','replace')
+            #req = Request(addr, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'})
+            #html = urlopen(req, timeout = 3, context=ssl.SSLContext())
             if html.status >= 300: # 3xx Redirection부터 에러 처리
                 return False
             self.get_web_data(addr)
