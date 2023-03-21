@@ -63,14 +63,7 @@ class TransmissionDelegate:
                 }
 
         if down_dir != "":
-
-            dir_name = ""
-
-            for t in magnet_info.matched_name.title:
-                dir_name += t
-                dir_name += " "
-
-            dir_name = dir_name[:-1]
+            dir_name = " ".join(magnet_info.matched_name.title)
 
             payload['arguments']['download-dir'] = down_dir + "/" + dir_name
 

@@ -38,27 +38,27 @@ class HistoryDelegate:
 
         return False
 
-    def __check_duplicate(self, season, ep, date, res, history_title):
+    def __check_duplicate(self, season, ep, date, resolution, history_title):
 
-        res = False
+        ret = False
 
         if season:
             if self.__check_data(history_title, ep) and self.__check_data(history_title, season):
-                res = True
+                ret = True
 
             if self.__check_data(history_title, date):
-                res = True
+                ret = True
         else:
             if self.__check_data(history_title, ep):
-                res = True
+                ret = True
 
             if self.__check_data(history_title, date):
-                res = True
+                ret = True
 
-        if res == "1080p" and re.search("720[pP]", history_title):
-            res = False
+        if resolution == "1080p" and re.search("720[pP]", history_title):
+            ret = False
 
-        return res
+        return ret
 
     def check_title_history(self, title, matched_name):
         if not self.__exist_history_file():
