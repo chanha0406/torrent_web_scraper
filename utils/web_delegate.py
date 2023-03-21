@@ -17,12 +17,12 @@ class WebDelegate:
         data = self.__parser_engine(html, "html.parser")
         return data
 
-    @retry(stop=stop_after_attempt(10))
+    @retry(stop=stop_after_attempt(15))
     def check_url_alive(self, addr):
         try:
             print(f"check {addr}")
             req = Request(addr, headers={'User-Agent': 'Mozilla/5.0'})
-            html = urlopen(req, timeout = 3, context=ssl.SSLContext())
+            html = urlopen(req, timeout =5, context=ssl.SSLContext())
             if html.status >= 300: # 3xx Redirection부터 에러 처리
                 return False
             self.get_web_data(addr)

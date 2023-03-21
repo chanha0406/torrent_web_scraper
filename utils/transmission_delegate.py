@@ -49,6 +49,10 @@ class TransmissionDelegate:
             if self.__history_delegate.check_magnet_history(magnet_info.magnet):
                 return False
 
+        if self.__history_delegate is not None:
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name):
+                return False
+
         down_dir.replace(" ", "")
 
         payload = {
@@ -121,3 +125,4 @@ class TransmissionDelegate:
                 res = self.__rpc_post(payload)
         return
         """
+
