@@ -18,6 +18,15 @@ class HistoryDelegate:
             return True
         return False
 
+    def __title_checker(self, title, macthed_words):
+        matched = True
+        for word in macthed_words:
+            if not word.lower() in title:
+                matched = False
+                break
+
+        return matched
+
     def check_magnet_history(self, magnet):
         if not self.__exist_history_file():
             return False
@@ -42,18 +51,24 @@ class HistoryDelegate:
 
         ret = False
 
+#        print(f"{season} {ep} {date} {resolution} {history_title}")
+
         if season:
             if self.__check_data(history_title, ep) and self.__check_data(history_title, season):
                 ret = True
 
-            if self.__check_data(history_title, date):
-                ret = True
-        else:
+            #if self.__check_data(history_title, date):
+            #    ret = True
+        elif ep:
             if self.__check_data(history_title, ep):
                 ret = True
 
+            #if self.__check_data(history_title, date):
+            #    ret = True
+        else:
             if self.__check_data(history_title, date):
                 ret = True
+
 
         if resolution == "1080p" and re.search("720[pP]", history_title):
             ret = False
@@ -79,9 +94,9 @@ class HistoryDelegate:
         with open(self.__csv_file, 'r', encoding="utf-8") as f:
             ff = csv.reader(f)
             for row in ff:
-                if " ".join(matched_name.title) in row[2]:
+                if self.__title_checker(row[2], matched_name.title):
                     if self.__check_duplicate(season, ep, date, res, row[2]):
-                        print("Fail to add magnet for [%s] which was duplicated." % row[2])
+                        print(f"Fail to add magnet for {title} which was duplicated.")
                         return True
         return False
 
