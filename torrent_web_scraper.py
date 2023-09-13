@@ -24,7 +24,7 @@ def main():
     scraper = ScraperTorrentsir(
         scraper_configuration_file, local_machine_status_file, local_machine_history_file
     )
-    # scrapers.append(scraper)
+    scrapers.append(scraper)
 
     scraper = ScraperBT4G(
         scraper_configuration_file, local_machine_status_file, local_machine_history_file

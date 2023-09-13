@@ -46,14 +46,8 @@ class TransmissionDelegate:
 
     def add_magnet_transmission_remote(self, magnet_info, down_dir):
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name):
-                return False
-
-        if self.__history_delegate is not None:
             if self.__history_delegate.check_magnet_history(magnet_info.magnet):
                 return False
-
-        down_dir.replace(" ", "")
 
         payload = {
                 "arguments":{
@@ -62,12 +56,19 @@ class TransmissionDelegate:
                 "method": "torrent-add"
                 }
 
+        down_dir.replace(" ", "")
+
         if down_dir != "":
             dir_name = " ".join(magnet_info.matched_name.title)
 
             payload['arguments']['download-dir'] = down_dir + "/" + dir_name
 
         print("DEBUG : download_dir = " + payload['arguments']['download-dir'])
+
+        if self.__history_delegate is not None:
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name,payload['arguments']['download-dir']):
+                return False
+
 
         res = self.__rpc_post(payload)
         if res['result'] == 'success':

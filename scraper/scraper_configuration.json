@@ -1,4 +1,5 @@
 {
+    "bt4g-url": "https://bt4g.com",
     "torrentmax-categories": "enter,sisa,drama",
     "torrentmax-drama-url": "/max/DRAMA/p",
     "torrentmax-enter-url": "/max/VARIETY/p",
@@ -12,6 +13,5 @@
     "torrentsir-max-page": "50",
     "torrentsir-sisa-url": "/bbs/board.php?bo_table=tv&page=",
     "torrentsir-start-index": "1",
-    "torrentsir-url": "https://torrentsir114.com",
-    "bt4g-url": "https://bt4g.com"
+    "torrentsir-url": "https://torrentsir118.com"
 }

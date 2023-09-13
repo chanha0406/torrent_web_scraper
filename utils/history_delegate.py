@@ -1,5 +1,6 @@
 import csv
 import os.path
+from os import listdir
 import re
 
 class HistoryDelegate:
@@ -35,7 +36,7 @@ class HistoryDelegate:
             ff = csv.reader(f)
             for row in ff:
                 if magnet == row[3]:
-                    print("Fail to add magnet for [%s] which was already downloaded." % row[2])
+                    print("Fail to add magnet for [%s] which was already added." % row[2])
                     return True
         return False
 
@@ -75,7 +76,7 @@ class HistoryDelegate:
 
         return ret
 
-    def check_title_history(self, title, matched_name):
+    def check_title_history(self, title, matched_name, dir_name):
         if not self.__exist_history_file():
             return False
 
@@ -91,13 +92,14 @@ class HistoryDelegate:
         res = re.search("[0-9]{3,4}[pP]", title)
         res = res.group().lower() if res else None
 
-        with open(self.__csv_file, 'r', encoding="utf-8") as f:
-            ff = csv.reader(f)
-            for row in ff:
-                if self.__title_checker(row[2], matched_name.title):
-                    if self.__check_duplicate(season, ep, date, res, row[2]):
-                        print(f"Fail to add magnet for {title} which was duplicated.")
-                        return True
+        files = [f for f in listdir(dir_name) if os.path.isfile(os.path.join(dir_name, f))]
+        #print(files)
+
+        for file in files:
+            if self.__check_duplicate(season, ep, date, res, file):
+                print(f"Fail to add magnet for {title} with {file} is already downloaded")
+                return True
+
         return False
 
     def add_magnet_info_to_history(self, magnet_story):
