@@ -1,6 +1,6 @@
 import csv
 import os.path
-from os import listdir
+from os import listdir, makedirs
 import re
 
 class HistoryDelegate:
@@ -91,6 +91,10 @@ class HistoryDelegate:
 
         res = re.search("[0-9]{3,4}[pP]", title)
         res = res.group().lower() if res else None
+        
+        if not os.path.exists(dir_name):
+            return False
+            # makedirs(dir_name)
 
         files = [f for f in listdir(dir_name) if os.path.isfile(os.path.join(dir_name, f))]
         #print(files)

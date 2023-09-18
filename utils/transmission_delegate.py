@@ -66,9 +66,12 @@ class TransmissionDelegate:
         print("DEBUG : download_dir = " + payload['arguments']['download-dir'])
 
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name,payload['arguments']['download-dir']):
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name, payload['arguments']['download-dir']):
                 return False
-
+        
+        if self.__history_delegate is not None:
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name, "/토렌트/series_store/" + dir_name):
+                return False
 
         res = self.__rpc_post(payload)
         if res['result'] == 'success':
