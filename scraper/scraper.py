@@ -72,6 +72,9 @@ class ScraperTemplate(metaclass=ABCMeta):
     def correct_url(self):
         """접속불가 토렌트 사이트 URL 순회 접속시도"""
         base = self.__scraper_config.get_config_scraper("url")
+        if self.name == "bt4g":
+            return True
+
         start_num = int(re.findall(r"\d+", base)[0])
         for num in range(start_num, start_num + 5):
             try_url = re.sub("[0-9]+", str(num), base)

@@ -32,10 +32,12 @@ class HistoryDelegate:
         if not self.__exist_history_file():
             return False
 
+        magnet=magnet.split("&amp;")[0]
         with open(self.__csv_file, 'r', encoding="utf-8") as f:
             ff = csv.reader(f)
             for row in ff:
-                if magnet == row[3]:
+                if magnet in row[3]:
+                    print(f"{magnet}")
                     print("Fail to add magnet for [%s] which was already added." % row[2])
                     return True
         return False

@@ -3,15 +3,15 @@
     "torrentmax-categories": "enter,sisa,drama",
     "torrentmax-drama-url": "/max/DRAMA/p",
     "torrentmax-enter-url": "/max/VARIETY/p",
-    "torrentmax-max-page": "50",
+    "torrentmax-max-page": "10",
     "torrentmax-sisa-url": "/max/DOCU/p",
     "torrentmax-start-index": "1",
     "torrentmax-url": "https://torrentmax15.com",
     "torrentsir-categories": "enter,sisa,drama",
     "torrentsir-drama-url": "/bbs/board.php?bo_table=drama&page=",
     "torrentsir-enter-url": "/bbs/board.php?bo_table=entertain&page=",
-    "torrentsir-max-page": "50",
+    "torrentsir-max-page": "10",
     "torrentsir-sisa-url": "/bbs/board.php?bo_table=tv&page=",
     "torrentsir-start-index": "1",
-    "torrentsir-url": "https://torrentsir118.com"
+    "torrentsir-url": "https://torrentsir141.com"
 }
