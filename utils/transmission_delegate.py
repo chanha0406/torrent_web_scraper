@@ -69,7 +69,7 @@ class TransmissionDelegate:
                 return False
         
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_item, "/토렌트/series_store/" + magnet_info.matched_item.dir_name):
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_item, down_dir + "_store" + "/" + magnet_info.matched_item.dir_name):
                 return False
 
         res = self.__rpc_post(payload)
