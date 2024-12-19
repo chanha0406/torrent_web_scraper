@@ -8,8 +8,7 @@ class Item:
         self.releases = info[2]
 
     def __repr__(self):
-        return "{} with {} from {}".format(" ".join(self.title),
-                self.resolutions, self.releases)
+        return f"{" ".join(self.title)} with {self.resolutions} from {self.releases} in {self.dir_name}"
 
 class TitleChecker:
     def __init__(self):
