@@ -19,7 +19,9 @@ class ScraperBT4G(ScraperTemplate):
         dir_name, queries, resolutions, releases = item
         magnet_list = []
         
-        for title in queries:
+        query_list = [dir_name] + queries
+        
+        for title in query_list:
             url = f"{base_url}/search?q={title}&page=rss&orderby=time"
             url = parse.urlparse(url)
             query = parse.parse_qs(url.query)

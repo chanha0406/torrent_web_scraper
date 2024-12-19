@@ -14,8 +14,10 @@ class Item:
 class TitleChecker:
     def __init__(self):
         self.__list = []
+
         for info in title_list:
             dir_name, queries, resolutions, releases = info
+            self.__list.append(Item((dir_name, dir_name, resolutions, releases)))
             for title in queries:
                 self.__list.append(Item((dir_name, title, resolutions, releases)))
 
