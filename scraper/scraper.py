@@ -146,11 +146,11 @@ class ScraperTemplate(metaclass=ABCMeta):
             # print(magnets)
 
             for title, magnet in magnets:
-                matched_name = self.__title_checker.validate_board_title(title)
-                if not matched_name:
+                matched_item = self.__title_checker.validate_board_title(title)
+                if not matched_item:
                     continue
 
-                magnet_info = MagnetInfo(title, magnet, matched_name, self.name)
+                magnet_info = MagnetInfo(title, magnet, matched_item, self.name)
                 ret = self.__transmission_delegate.add_magnet_transmission_remote(
                     magnet_info, self.__down_dir
                 )
@@ -198,16 +198,16 @@ class ScraperTemplate(metaclass=ABCMeta):
                 # print("info: parse info=\t[%s][%s][%d] - %s"
                 #        % (self.name, category.get_category(), board_id_num, title))
 
-                matched_name = self.__title_checker.validate_board_title(title)
-                if not matched_name:
-                    # print("Not matched_name ", title)
+                matched_item = self.__title_checker.validate_board_title(title)
+                if not matched_item:
+                    # print("Not matched_item ", title)
                     continue
 
                 magnet = self.parse_magnet_from_page_url(href)
                 if magnet is None:
                     continue
 
-                magnet_info = MagnetInfo(title, magnet, matched_name, self.name)
+                magnet_info = MagnetInfo(title, magnet, matched_item, self.name)
                 ret = self.__transmission_delegate.add_magnet_transmission_remote(
                     magnet_info, self.__down_dir
                 )
@@ -215,6 +215,6 @@ class ScraperTemplate(metaclass=ABCMeta):
                     continue
 
                 # TODO: remove_transmission_remote method는 pass 상태임
-                self.__transmission_delegate.remove_transmission_remote(matched_name)
+                self.__transmission_delegate.remove_transmission_remote(matched_item)
 
         category.set_config_local("history", new_latest_id)

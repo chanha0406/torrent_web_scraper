@@ -1,7 +1,8 @@
 import sys
 import json
 import requests
-
+from utils.magnet_info import MagnetInfo
+from utils.title_checker import Item
 from bs4 import BeautifulSoup
 
 class TransmissionDelegate:
@@ -44,7 +45,7 @@ class TransmissionDelegate:
         assert response["result"] == "success"
         return response
 
-    def add_magnet_transmission_remote(self, magnet_info, down_dir):
+    def add_magnet_transmission_remote(self, magnet_info: MagnetInfo, down_dir):
         if self.__history_delegate is not None:
             if self.__history_delegate.check_magnet_history(magnet_info.magnet):
                 return False
@@ -59,18 +60,16 @@ class TransmissionDelegate:
         down_dir.replace(" ", "")
 
         if down_dir != "":
-            dir_name = " ".join(magnet_info.matched_name.title)
-
-            payload['arguments']['download-dir'] = down_dir + "/" + dir_name
+            payload['arguments']['download-dir'] = down_dir + "/" + magnet_info.matched_item.dir_name
 
         print("DEBUG : download_dir = " + payload['arguments']['download-dir'])
 
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name, payload['arguments']['download-dir']):
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_item, payload['arguments']['download-dir']):
                 return False
         
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_name, "/토렌트/series_store/" + dir_name):
+            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_item, "/토렌트/series_store/" + magnet_info.matched_item.dir_name):
                 return False
 
         res = self.__rpc_post(payload)

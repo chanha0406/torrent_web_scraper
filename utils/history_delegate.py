@@ -3,6 +3,8 @@ import os.path
 from os import listdir, makedirs
 import re
 
+from utils.title_checker import Item
+
 class HistoryDelegate:
     def __init__(self, historyFile):
         self.__csv_file = historyFile
@@ -78,7 +80,7 @@ class HistoryDelegate:
 
         return ret
 
-    def check_title_history(self, title, matched_name, dir_name):
+    def check_title_history(self, title, matched_item: Item, dir_name):
         if not self.__exist_history_file():
             return False
 

@@ -16,19 +16,21 @@ class ScraperBT4G(ScraperTemplate):
         )
 
     def parse_magnets_from_page_url(self, base_url, item):
-        title, resolutions, releases = item
-        url = f"{base_url}/search?q={title}&page=rss&orderby=time"
-        url = parse.urlparse(url)
-        query = parse.parse_qs(url.query)
-        result = parse.urlencode(query, doseq=True)
-        url = url._replace(query=result)
-        bs_obj = self.web_delegate.get_web_data(url.geturl())
-        item_list = bs_obj.find_all("item")
+        dir_name, queries, resolutions, releases = item
         magnet_list = []
+        
+        for title in queries:
+            url = f"{base_url}/search?q={title}&page=rss&orderby=time"
+            url = parse.urlparse(url)
+            query = parse.parse_qs(url.query)
+            result = parse.urlencode(query, doseq=True)
+            url = url._replace(query=result)
+            bs_obj = self.web_delegate.get_web_data(url.geturl())
+            item_list = bs_obj.find_all("item")
 
-        for rss_item in item_list:
-            rss_item_title = rss_item.find("title").get_text()
-            magnet_list.append((rss_item_title, re.search("<link/>(.*)<guid", str(rss_item))[1]))
+            for rss_item in item_list:
+                rss_item_title = rss_item.find("title").get_text()
+                magnet_list.append((rss_item_title, re.search("<link/>(.*)<guid", str(rss_item))[1]))
 
         return magnet_list
 

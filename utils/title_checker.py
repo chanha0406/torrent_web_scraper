@@ -2,7 +2,8 @@ from local_config.program_list import title_list
 
 class Item:
     def __init__(self, info):
-        self.title = info[0].strip().lower().split(" ")
+        self.dir_name = info[0]
+        self.title = info[1].strip().lower().split(" ")
         self.resolutions = info[1]
         self.releases = info[2]
 
@@ -14,9 +15,11 @@ class TitleChecker:
     def __init__(self):
         self.__list = []
         for info in title_list:
-            self.__list.append(Item(info))
+            dir_name, queries, resolutions, releases = info
+            for title in queries:
+                self.__list.append(Item((dir_name, title, resolutions, releases)))
 
-    def validate_board_title(self, board_title):
+    def validate_board_title(self, board_title) -> Item | bool:
         "board_title string 값이 요청한 목록에 존재하는지 확인"
         board_title = board_title.lower()
 
