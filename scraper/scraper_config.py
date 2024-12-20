@@ -21,7 +21,7 @@ class ScraperConfig:
         return ret
 
     def set_base_url(self, base_url):
-        attr = "%s-url" % (self.__site)
+        attr = f"{self.__site}-url"
         self.__url_updated = base_url
         self.__manager_scraper_configuration.set_attr_config(attr, base_url)
         self.__url = self.get_base_url()
@@ -33,17 +33,17 @@ class ScraperConfig:
         return self.__site
 
     def get_config_local(self, attr):
-        attr = "%s-%s" % (self.__site, attr)
+        attr = f"{self.__site}-{attr}"
         return self.__manager_local_machine.get_attr_config(attr)
 
     def set_config_local(self, attr, value):
-        attr = "%s-%s" % (self.__site, attr)
+        attr = f"{self.__site}-{attr}"
         self.__manager_local_machine.set_attr_config(attr, value)
 
     def get_config_scraper(self, attr):
-        attr = "%s-%s" % (self.__site, attr)
+        attr = f"{self.__site}-{attr}"
         return self.__manager_scraper_configuration.get_attr_config(attr)
 
     def set_config_scraper(self, attr, value):
-        attr = "%s-%s" % (self.__site, attr)
+        attr = f"{self.__site}-{attr}"
         self.__manager_scraper_configuration.set_attr_config(attr, value)

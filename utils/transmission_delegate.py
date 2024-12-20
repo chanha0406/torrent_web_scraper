@@ -5,20 +5,23 @@ from utils.magnet_info import MagnetInfo
 from utils.title_checker import Item
 from bs4 import BeautifulSoup
 
+
 class TransmissionDelegate:
-    def __init__(self, trans_id, trans_pw, trans_host, trans_port,
-            history_delegate=None):
+    def __init__(
+        self, trans_id, trans_pw, trans_host, trans_port, history_delegate=None
+    ):
         self.__id = trans_id
         self.__pw = trans_pw
         self.__ip = trans_host
         self.__port = trans_port
         self.__history_delegate = history_delegate
-        self.__url = "http://%s:%s@%s:%s/transmission/rpc" % (self.__id, self.__pw,
-                self.__ip,self.__port)
+        self.__url = (
+            f"http://{self.__id}:{self.__pw}@{self.__ip}:{self.__port}/transmission/rpc"
+        )
         _ = self.__rpc_get_session()
 
         if _ is None:
-            print("Failed to connect transmission - %s:%s" % (self.__ip, self.__port))
+            print(f"Failed to connect transmission - {self.__ip}:{self.__port}")
             sys.exit()
         else:
             self.__session = _
@@ -26,21 +29,22 @@ class TransmissionDelegate:
     def __rpc_get_session(self):
         res = requests.get(self.__url)
         bs = BeautifulSoup(res.text, "html.parser")
-        code_text = bs.find('code').text
+        code_text = bs.find("code").text
         array = code_text.split()
 
         if len(array) == 2 and array[0] == "X-Transmission-Session-Id:":
-            session_id ={ array[0].replace(":", "") : array[1]}
+            session_id = {array[0].replace(":", ""): array[1]}
             return session_id
 
         return None
 
     def __rpc_post(self, payload):
-        headers = {'content-type': 'application/json'}
+        headers = {"content-type": "application/json"}
         headers.update(self.__session)
 
         response = requests.post(
-            self.__url, data=json.dumps(payload), headers=headers).json()
+            self.__url, data=json.dumps(payload), headers=headers
+        ).json()
 
         assert response["result"] == "success"
         return response
@@ -51,30 +55,40 @@ class TransmissionDelegate:
                 return False
 
         payload = {
-                "arguments":{
-                    "filename": magnet_info.magnet,
-                    },
-                "method": "torrent-add"
-                }
+            "arguments": {
+                "filename": magnet_info.magnet,
+            },
+            "method": "torrent-add",
+        }
 
         down_dir.replace(" ", "")
 
         if down_dir != "":
-            payload['arguments']['download-dir'] = down_dir + "/" + magnet_info.matched_item.dir_name
+            payload["arguments"][
+                "download-dir"
+            ] = f"{down_dir}/{magnet_info.matched_item.dir_name}"
 
-        print("DEBUG : download_dir = " + payload['arguments']['download-dir'])
+        print(f"DEBUG : download_dir = {payload['arguments']['download-dir']}")
 
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_item, payload['arguments']['download-dir']):
+            if self.__history_delegate.check_title_history(
+                magnet_info.title,
+                magnet_info.matched_item,
+                payload["arguments"]["download-dir"],
+            ):
                 return False
-        
+
         if self.__history_delegate is not None:
-            if self.__history_delegate.check_title_history(magnet_info.title, magnet_info.matched_item, down_dir + "_store" + "/" + magnet_info.matched_item.dir_name):
+            if self.__history_delegate.check_title_history(
+                magnet_info.title,
+                magnet_info.matched_item,
+                f"{down_dir}_store/{magnet_info.matched_item.dir_name}",
+            ):
                 return False
 
         res = self.__rpc_post(payload)
-        if res['result'] == 'success':
-            print("Success to add magnet for [%s]." % magnet_info.title)
+        if res["result"] == "success":
+            print(f"Success to add magnet for [{magnet_info.title}].")
         else:
             return False
 
@@ -86,10 +100,8 @@ class TransmissionDelegate:
 
     def list_download_done(self):
         payload = {
-            "arguments":{
-                "fields": ["id", "name", "isFinished", "percentDone"]
-                },
-            "method": "torrent-get"
+            "arguments": {"fields": ["id", "name", "isFinished", "percentDone"]},
+            "method": "torrent-get",
         }
         res = self.__rpc_post(payload)
 
@@ -121,4 +133,3 @@ class TransmissionDelegate:
                 res = self.__rpc_post(payload)
         return
         """
-

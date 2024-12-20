@@ -7,7 +7,7 @@ from scraper.scraper_bt4g import ScraperBT4G
 
 
 def main():
-    root_path = os.path.abspath(os.path.dirname(__file__)) + "/"
+    root_path = f"{os.path.abspath(os.path.dirname(__file__))}/"
     local_machine_status_file = root_path + "local_config/local_machine_configuration.json"
     local_machine_history_file = root_path + "local_config/magnet_history.csv"
     scraper_configuration_file = root_path + "scraper/scraper_configuration.json"
@@ -32,7 +32,7 @@ def main():
     scrapers.append(scraper)
 
     for scraper in scrapers:
-        print("Scraper for %s!!!" % scraper.name)
+        print(f"Scraper for {scraper.name}!!!")
         ret = scraper.check_site_alive()
         if not ret:
             ret = scraper.correct_url()

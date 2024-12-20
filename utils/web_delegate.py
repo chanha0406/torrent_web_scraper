@@ -28,8 +28,8 @@ class WebDelegate:
                 return False
             self.get_web_data(addr)
         except Exception as e:
-            print("Exception access url : %s" % e)
-            print("We can not scrap %s, something wrong.\n" % addr)
+            print(f"Exception access url : {e}")
+            print(f"We can not scrap {addr}, something wrong.\n")
             return False
 
         return True

@@ -18,8 +18,8 @@ class BoardPageIterator:
         self.__web_index += 1
 
         "return url index"
-        url = "%s%s" % (self.__web_addr, self.__web_index)
-        print("DEBUG : %s" % url)
+        url = f"{self.__web_addr}{self.__web_index}"
+        print(f"DEBUG : {url}")
         return url
 
     def mark_for_early_stop(self):

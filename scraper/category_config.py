@@ -30,17 +30,17 @@ class CategoryConfig():
         return self.__category
 
     def get_config_local(self, attr):
-        attr = "%s-%s-%s" % (self.__site, self.__category, attr)
+        attr = f"{self.__site}-{self.__category}-{attr}"
         return self.__manager_local_machine.get_attr_config(attr)
 
     def set_config_local(self, attr, value):
-        attr = "%s-%s-%s" % (self.__site, self.__category, attr)
+        attr = f"{self.__site}-{self.__category}-{attr}"
         self.__manager_local_machine.set_attr_config(attr, value)
 
     def get_config_scraper(self, attr):
-        attr = "%s-%s-%s" % (self.__site, self.__category, attr)
+        attr = f"{self.__site}-{self.__category}-{attr}"
         return self.__manager_scraper_configuration.get_attr_config(attr)
 
     def set_config_scraper(self, attr, value):
-        attr = "%s-%s-%s" % (self.__site, self.__category, attr)
+        attr = f"{self.__site}-{self.__category}-{attr}"
         self.__manager_scraper_configuration.set_attr_config(attr, value)

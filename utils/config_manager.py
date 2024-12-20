@@ -11,7 +11,7 @@ class ConfigManager():
         if file_ext == 'json':
             self.__delegate = JsonParser(self.__config_file)
         else:
-            print("File extention, %s is not support." % file_ext)
+            print(f"File extention, {file_ext} is not support.")
             sys.exit()
 
     #TO-DO: property 사용하려면 작업 필요

@@ -55,7 +55,7 @@ class ScraperTorrentmax(ScraperTemplate):
             return 0
         else:
             _ = url.split(check_str)[1]  # split 뒷 부분이 필요함
-            split_list = re.split("\/|\?", _)
+            split_list = re.split(r"\/|\?", _)
             for item in split_list:
                 if item.isdigit():
                     return int(item)

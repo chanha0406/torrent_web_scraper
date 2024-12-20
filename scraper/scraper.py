@@ -110,9 +110,9 @@ class ScraperTemplate(metaclass=ABCMeta):
             )
             self.__categories.append(_)
 
-        print("Aggregation categories for : " + str(self))
+        print(f"Aggregation categories for : {str(self)}")
         for category in self.categories:
-            print("\t" + category.get_category() + " : " + category.get_url())
+            print(f"\t{category.get_category()} : {category.get_url()}")
 
     @abstractmethod
     def parse_page_data(self, url):

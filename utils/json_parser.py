@@ -7,7 +7,7 @@ class JsonParser:
 
     def __get_json_data(self):
         try:
-            data_file = open(self.__json_file, 'r')
+            data_file = open(self.__json_file)
         except FileNotFoundError as e:
             self.__data = {}
         else:
@@ -34,8 +34,8 @@ class JsonParser:
         return True
 
     def dump(self):
-        data_file = open(self.__json_file, 'r')
+        data_file = open(self.__json_file)
         _data = json.load(data_file)
 
         for key in _data.keys():
-            print("{} : {}".format(key, _data[key]))
+            print(f"{key} : {_data[key]}")
